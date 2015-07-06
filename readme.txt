@@ -1,0 +1,1 @@
+a simple fixed-width formatter used for cumulative data exports as part of integrations/reporting. This is a companion piece to by blog
