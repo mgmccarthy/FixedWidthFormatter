@@ -18,9 +18,9 @@ namespace FixedWidthFormatter.Tests
 
                 var dataExport = new List<DataExport>
                 {
-                    new DataExport { FirstName = "mike", LastName = "mccarthy", Gender = "m"},
-                    new DataExport { FirstName = "jessica", LastName = "cleghorn", Gender = "f"},
-                    new DataExport { FirstName = "joe", LastName = "schmoe", Gender = "m"}
+                    new DataExport { FirstName = "dave", LastName = "jones", Gender = "m"},
+                    new DataExport { FirstName = "joe", LastName = "schmoe", Gender = "m"},
+                    new DataExport { FirstName = "betty", LastName = "ann", Gender = "f"},
                 };
                 
                 var results = fixedWidthFormatter.Format(dataExport);
