@@ -1,1 +1,1 @@
-a simple fixed-width formatter utilizing generics and expressions. This is a companion piece to by blog
+a simple fixed-width formatter utilizing generics and expressions. This is a companion piece to by blog posting: https://mgmccarthy.wordpress.com/2015/07/06/building-a-fixedwidthformatter-for-a-cumulative-report/
