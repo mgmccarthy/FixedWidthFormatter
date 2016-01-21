@@ -8,7 +8,7 @@ namespace FixedWidthFormatter
 {
     public class FixedWidthFormatter<T> where T : class
     {
-        private readonly Dictionary<string, FixedWidth> propertyPositions = new Dictionary<string, FixedWidth>();
+        private readonly Dictionary<string, Position> propertyPositions = new Dictionary<string, Position>();
         private readonly PropertyInfo[] propertiesOfT;
 
         public FixedWidthFormatter()
@@ -16,10 +16,14 @@ namespace FixedWidthFormatter
             propertiesOfT = typeof(T).GetProperties();
         }
 
-        public void SetWidthFor<TProperty>(Expression<Func<T, TProperty>> expression, FixedWidth fixedWidth)
+        public Position SetPositionFor<TProperty>(Expression<Func<T, TProperty>> expression)
         {
+            var position = new Position();
+
             var memberExpression = expression.Body as MemberExpression;
-            propertyPositions.Add(memberExpression.Member.Name, fixedWidth);
+            propertyPositions.Add(memberExpression.Member.Name, position);
+
+            return position;
         }
 
         public string Format(IEnumerable<T> collectionToFormat)
@@ -29,23 +33,22 @@ namespace FixedWidthFormatter
             {
                 foreach (var propertyInfo in propertiesOfT)
                 {
-                    FixedWidth fixedWidth;
-                    propertyPositions.TryGetValue(propertyInfo.Name, out fixedWidth);
+                    Position position;
+                    propertyPositions.TryGetValue(propertyInfo.Name, out position);
                     var value = propertyInfo.GetValue(data);
-                    AppendDataToAssignedPosition(stringBuilder, fixedWidth, value == null ? string.Empty : value.ToString());
+                    AppendDataToAssignedPosition(stringBuilder, position, value?.ToString() ?? string.Empty);
                 }
                 stringBuilder.Append(Environment.NewLine);
             }
             return stringBuilder.ToString();
         }
 
-        private static void AppendDataToAssignedPosition(StringBuilder stringBuilder, FixedWidth fixedWidth, string data)
+        private static void AppendDataToAssignedPosition(StringBuilder stringBuilder, Position position, string data)
         {
             stringBuilder.Append(data);
-
-            var availableSpaceForData = ((fixedWidth.To - fixedWidth.From) + 1);
+            var availableSpaceForData = ((position.To - position.From) + 1);
             var whiteSpaceLeftOver = availableSpaceForData - data.Length;
-            stringBuilder.Append(' ', whiteSpaceLeftOver);           
+            stringBuilder.Append(' ', whiteSpaceLeftOver);   
         }
     }
 }

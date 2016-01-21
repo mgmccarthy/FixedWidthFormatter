@@ -8,28 +8,33 @@ namespace FixedWidthFormatter.Tests
         [TestFixture]
         public class WhenUsingFixedWidthFormatter
         {
+            private string expected;
+            private string actual;
+
             [SetUp]
             public void Given()
             {
-                var fixedWidthFormatter = new FixedWidthFormatter<DataExport>();
-                fixedWidthFormatter.SetWidthFor(x => x.FirstName, new FixedWidth(1, 10));
-                fixedWidthFormatter.SetWidthFor(x => x.LastName, new FixedWidth (11, 20));
-                fixedWidthFormatter.SetWidthFor(x => x.Gender, new FixedWidth(21, 25));
-
                 var dataExport = new List<DataExport>
                 {
                     new DataExport { FirstName = "dave", LastName = "jones", Gender = "m"},
                     new DataExport { FirstName = "joe", LastName = "schmoe", Gender = "m"},
                     new DataExport { FirstName = "betty", LastName = "ann", Gender = "f"},
                 };
-                
-                var results = fixedWidthFormatter.Format(dataExport);
+
+                var fixedWidthFormatter = new FixedWidthFormatter<DataExport>();
+                fixedWidthFormatter.SetPositionFor(x => x.FirstName).From(1).To(10);
+                fixedWidthFormatter.SetPositionFor(x => x.LastName).From(11).To(20);
+                fixedWidthFormatter.SetPositionFor(x => x.Gender).From(21).To(25);
+
+                expected = "dave      jones     m    \r\njoe       schmoe    m    \r\nbetty     ann       f    \r\n";
+
+                actual = fixedWidthFormatter.Format(dataExport);
             }
 
             [Test]
-            public void YourTestHere()
+            public void ReturnsTheCorrectResults()
             {
-
+                Assert.That(actual, Is.EqualTo(expected));
             }
 
             public class DataExport
