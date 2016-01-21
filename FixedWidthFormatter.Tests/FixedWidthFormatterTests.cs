@@ -6,7 +6,7 @@ namespace FixedWidthFormatter.Tests
     public static class FixedWidthFormatterTests
     {
         [TestFixture]
-        public class WhenUsingFixedWidthFormatter
+        public class WhenFormattingDataToFixedWidth
         {
             private string expected;
             private string actual;
@@ -14,11 +14,11 @@ namespace FixedWidthFormatter.Tests
             [SetUp]
             public void Given()
             {
-                var dataExport = new List<DataExport>
+                var dataToFormat = new List<DataExport>
                 {
                     new DataExport { FirstName = "dave", LastName = "jones", Gender = "m"},
                     new DataExport { FirstName = "joe", LastName = "schmoe", Gender = "m"},
-                    new DataExport { FirstName = "betty", LastName = "ann", Gender = "f"},
+                    new DataExport { FirstName = "betty", LastName = "ann", Gender = "f"}
                 };
 
                 var fixedWidthFormatter = new FixedWidthFormatter<DataExport>();
@@ -27,8 +27,7 @@ namespace FixedWidthFormatter.Tests
                 fixedWidthFormatter.SetPositionFor(x => x.Gender).From(21).To(25);
 
                 expected = "dave      jones     m    \r\njoe       schmoe    m    \r\nbetty     ann       f    \r\n";
-
-                actual = fixedWidthFormatter.Format(dataExport);
+                actual = fixedWidthFormatter.Format(dataToFormat);
             }
 
             [Test]
@@ -36,13 +35,43 @@ namespace FixedWidthFormatter.Tests
             {
                 Assert.That(actual, Is.EqualTo(expected));
             }
+        }
 
-            public class DataExport
+        [TestFixture]
+        public class WhenFormattingDataToFixedWidthAndDataContainsNullValue
+        {
+            private string expected;
+            private string actual;
+
+            [SetUp]
+            public void Given()
             {
-                public string FirstName { get; set; }
-                public string LastName { get; set; }
-                public string Gender { get; set; }
+                var dataToFormat = new List<DataExport>
+                {
+                    new DataExport { FirstName = "dave", LastName = null, Gender = "m" }
+                };
+
+                var fixedWidthFormatter = new FixedWidthFormatter<DataExport>();
+                fixedWidthFormatter.SetPositionFor(x => x.FirstName).From(1).To(10);
+                fixedWidthFormatter.SetPositionFor(x => x.LastName).From(11).To(20);
+                fixedWidthFormatter.SetPositionFor(x => x.Gender).From(21).To(25);
+
+                expected = "dave                m    \r\n";
+                actual = fixedWidthFormatter.Format(dataToFormat);
             }
+
+            [Test]
+            public void ReturnsEmptyStringForNullValue()
+            {
+                Assert.That(actual, Is.EqualTo(expected));
+            }
+        }
+
+        public class DataExport
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Gender { get; set; }
         }
     }
 }

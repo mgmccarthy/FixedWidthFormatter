@@ -26,10 +26,10 @@ namespace FixedWidthFormatter
             return position;
         }
 
-        public string Format(IEnumerable<T> collectionToFormat)
+        public string Format(IEnumerable<T> dataToFormat)
         {
             var stringBuilder = new StringBuilder();
-            foreach (var data in collectionToFormat)
+            foreach (var data in dataToFormat)
             {
                 foreach (var propertyInfo in propertiesOfT)
                 {
