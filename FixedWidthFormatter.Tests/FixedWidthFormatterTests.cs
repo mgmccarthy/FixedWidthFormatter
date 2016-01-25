@@ -68,8 +68,6 @@ namespace FixedWidthFormatter.Tests
             }
         }
 
-        //TODO
-        [Ignore]
         [TestFixture]
         public class WhenFormattingDataToFixedWidthAndThereIsABlankLine
         {
@@ -92,9 +90,8 @@ namespace FixedWidthFormatter.Tests
                 fixedWidthFormatter.InsertBlank().From(15).To(16);
                 fixedWidthFormatter.SetPositionFor(x => x.Gender).From(17).To(19);
 
-                //this is old expected before I got insert line working
-                //expected = "dave      jones     m    \r\njoe       schmoe    m    \r\nbetty     ann       f    \r\n";
-                //TODO: build new expected
+                expected = "dave  jones     m  \r\njoe   schmoe    m  \r\nbetty ann       f  \r\n";
+
                 actual = fixedWidthFormatter.Format(dataToFormat);
             }
 
@@ -105,8 +102,12 @@ namespace FixedWidthFormatter.Tests
             }
         }
 
-        //TODO: new test to test for multiple insert blank calls
-
+        //TODO
+        [Ignore]
+        [TestFixture]
+        public class WhenFormattingDataToFixedWidthAndThereAreMultipleBlankLines
+        {
+        }
 
         [TestFixture]
         public class WhenPositionRangesOverlap
