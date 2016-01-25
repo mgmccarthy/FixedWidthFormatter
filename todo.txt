@@ -1,7 +1,0 @@
-- add the ability to add blanks between property values using an API like this: 
-	fixedWidthFormatter.InsertBlank().From(21).To(25);
-
-- when invoking .Format(), throw an expection for Positions with overlapping values:
-	example: 
-		Position.From(1).To(3)
-		Position.To(2).To(4)
