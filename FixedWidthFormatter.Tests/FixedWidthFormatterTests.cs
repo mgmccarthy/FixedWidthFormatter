@@ -107,29 +107,6 @@ namespace FixedWidthFormatter.Tests
 
         //TODO: new test to test for multiple insert blank calls
 
-        [TestFixture]
-        public class WhenFromValueIsSetToZero
-        {
-            [Test]
-            [ExpectedException(typeof(InvalidOperationException), ExpectedMessage = "from value of Position cannot be 0.")]
-            public void ThrowsInvalidOperationException()
-            {
-                var fixedWidthFormatter = new FixedWidthFormatter<DataExport>();
-                fixedWidthFormatter.SetPositionFor(x => x.FirstName).From(0).To(2);
-            }
-        }
-
-        [TestFixture]
-        public class WhenToValueIsSetToZero
-        {
-            [Test]
-            [ExpectedException(typeof(InvalidOperationException), ExpectedMessage = "to value of Position cannot be 0.")]
-            public void ThrowsInvalidOperationException()
-            {
-                var fixedWidthFormatter = new FixedWidthFormatter<DataExport>();
-                fixedWidthFormatter.SetPositionFor(x => x.FirstName).From(1).To(0);
-            }
-        }
 
         [TestFixture]
         public class WhenPositionRangesOverlap
@@ -142,30 +119,6 @@ namespace FixedWidthFormatter.Tests
                 fixedWidthFormatter.SetPositionFor(x => x.FirstName).From(1).To(4);
                 fixedWidthFormatter.SetPositionFor(x => x.LastName).From(2).To(6);
                 fixedWidthFormatter.Format(new List<DataExport>());
-            }
-        }
-
-        [TestFixture]
-        public class WhenToIsEqualToFrom
-        {
-            [Test]
-            [ExpectedException(typeof(InvalidOperationException), ExpectedMessage = "To cannot be less than or equal to From.")]
-            public void ThrowsInvalidOperationException()
-            {
-                var fixedWidthFormatter = new FixedWidthFormatter<DataExport>();
-                fixedWidthFormatter.SetPositionFor(x => x.FirstName).From(1).To(1);
-            }
-        }
-
-        [TestFixture]
-        public class WhenToIsLessThanToFrom
-        {
-            [Test]
-            [ExpectedException(typeof(InvalidOperationException), ExpectedMessage = "To cannot be less than or equal to From.")]
-            public void ThrowsInvalidOperationException()
-            {
-                var fixedWidthFormatter = new FixedWidthFormatter<DataExport>();
-                fixedWidthFormatter.SetPositionFor(x => x.FirstName).From(2).To(1);
             }
         }
 
