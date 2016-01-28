@@ -113,7 +113,7 @@ namespace FixedWidthFormatter.Tests
         public class WhenPositionRangesOverlap
         {
             [Test]
-            [ExpectedException(typeof(InvalidOperationException), ExpectedMessage = "position range cannot overlap.")]
+            [ExpectedException(typeof(InvalidOperationException), ExpectedMessage = "position ranges cannot overlap.")]
             public void ThrowsInvalidOperationException()
             {
                 var fixedWidthFormatter = new FixedWidthFormatter<DataExport>();

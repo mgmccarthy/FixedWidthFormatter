@@ -38,7 +38,7 @@ namespace FixedWidthFormatter
         public string Format(IEnumerable<T> listOfT)
         {
             if (PositionRangesOverlap())
-                throw new InvalidOperationException("position range cannot overlap.");
+                throw new InvalidOperationException("position ranges cannot overlap.");
 
             var stringBuilder = new StringBuilder();
 
